@@ -11,40 +11,50 @@ public class FollowCam : MonoBehaviour {
 	
 	public GameObject poi;
 	public float camZ;
-	
-	void Awake() {
+
+
+    void FixedUpdate()
+    {
+        Vector3 endGoal;
+        if (poi == null)
+        {
+            endGoal = Vector3.zero;
+        }
+        else
+        {
+
+            endGoal = poi.transform.position;
+
+            if (poi.tag == "Projectile")
+            {
+
+                if (poi.GetComponent<Rigidbody>().IsSleeping())
+                {
+
+                    poi = null;
+                    Destroy(poi);
+                    MissionDemolition.SwitchView("Both");
+
+                    return;
+                }
+            }
+        }
+
+        endGoal.x = Mathf.Max(minXY.x, endGoal.x);
+        endGoal.y = Mathf.Max(minXY.y, endGoal.y);
+        endGoal = Vector3.Lerp(transform.position, endGoal, easing);
+
+        endGoal.z = camZ;
+
+        this.transform.position = endGoal;
+        this.GetComponent<Camera>().orthographicSize = endGoal.y + 10;
+    }
+
+
+    void Awake() {
 		S = this;
 		camZ = this.transform.position.z;
 	}
 	
-	void FixedUpdate () {
-		Vector3 destination;
-		if (poi == null) {
-			destination = Vector3.zero;
-		} else {
-			
-			destination = poi.transform.position;
-			
-			if (poi.tag == "Projectile") {
-				
-				if (poi.GetComponent<Rigidbody>().IsSleeping()) {
 	
-					poi = null;
-					Destroy(poi);
-					MissionDemolition.SwitchView("Both");
-					
-					return;
-				}
-			}
-		}
-
-		destination.x = Mathf.Max(minXY.x, destination.x);
-		destination.y = Mathf.Max(minXY.y, destination.y);
-		destination = Vector3.Lerp(transform.position, destination, easing);
-		
-		destination.z = camZ;
-		
-		this.transform.position = destination;
-		this.GetComponent<Camera>().orthographicSize = destination.y + 10;
-	}
 }
