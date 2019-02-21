@@ -17,12 +17,6 @@ public class FollowCam : MonoBehaviour {
 		camZ = this.transform.position.z;
 	}
 	
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	
 	void FixedUpdate () {
 		Vector3 destination;
 		if (poi == null) {

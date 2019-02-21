@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CloudCrafter : MonoBehaviour {
 
-	// Fileds set in the Unity Inspector pane
 	public int numClouds = 40; 
 	public GameObject[] cloudPrefabs; 
 	public Vector3 cloudPosMin; 
@@ -12,7 +11,7 @@ public class CloudCrafter : MonoBehaviour {
 	public float cloudScaleMax = 5; 
 	public float cloudSpeedMult = 0.5f; 
 	public bool _______________;
-	// Fields set dynamically
+
 	public GameObject[] cloudInstances;
 	
 	void Awake() {
@@ -43,12 +42,7 @@ public class CloudCrafter : MonoBehaviour {
 			cloudInstances[i] = cloud;
 		}
 	}
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		foreach (GameObject cloud in cloudInstances) {
 			
