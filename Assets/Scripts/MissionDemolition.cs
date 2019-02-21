@@ -33,9 +33,54 @@ public class MissionDemolition : MonoBehaviour {
 		levelMax = castles.Length;
 		StartLevel();
 	}
-	
-	
-	void Update () {
+
+    void ShowGT()
+    {
+
+        gtLevel.text = "Level: " + (level + 1) + " of " + levelMax;
+        gtScore.text = "Shots Taken: " + shotsTaken;
+    }
+
+    void NextLevel()
+    {
+        level++;
+        if (level == levelMax)
+        {
+            level = 0;
+        }
+        StartLevel();
+    }
+
+
+    void OnGUI()
+    {
+
+        Rect buttonRect = new Rect((Screen.width / 2) - 50, 10, 100, 24);
+        switch (showing)
+        {
+            case "Slingshot":
+                if (GUI.Button(buttonRect, "Show Castle"))
+                {
+                    SwitchView("Castle");
+                }
+                break;
+            case "Castle":
+                if (GUI.Button(buttonRect, "Show Both"))
+                {
+                    SwitchView("Both");
+                }
+                break;
+            case "Both":
+                if (GUI.Button(buttonRect, "Show Slingshot"))
+                {
+                    SwitchView("Slingshot");
+                }
+                break;
+        }
+    }
+
+
+    void Update () {
 		ShowGT();
 	
 		
@@ -71,46 +116,14 @@ public class MissionDemolition : MonoBehaviour {
 		
 		mode = GameMode.playing;
 	}
-	
-	void ShowGT() {
-		
-		gtLevel.text = "Level: " + (level + 1) + " of " + levelMax;
-		gtScore.text = "Shots Taken: " + shotsTaken;
-	}
-	
-	void NextLevel() {
-		level++;
-		if (level == levelMax) {
-			level = 0;
-		}
-		StartLevel();
-	}
-	
-	
-	void OnGUI() {
-		
-		Rect buttonRect = new Rect((Screen.width/2) - 50, 10, 100, 24);
-		switch(showing) {
-			case "Slingshot":
-				if (GUI.Button(buttonRect, "Show Castle")) {
-					SwitchView("Castle");
-				}
-				break;
-			case "Castle":
-				if (GUI.Button (buttonRect, "Show Both")) {
-					SwitchView("Both");
-				}
-				break;
-			case "Both":
-				if (GUI.Button(buttonRect, "Show Slingshot")) {
-					SwitchView("Slingshot");
-				}
-				break;
-		}
-	}
-	
-	
-	static public void SwitchView(string eView) {
+
+    public static void ShotFired()
+    {
+        S.shotsTaken++;
+    }
+
+
+    static public void SwitchView(string eView) {
 		S.showing = eView;
 		switch (S.showing) {
 			case "Slingshot":
@@ -126,8 +139,6 @@ public class MissionDemolition : MonoBehaviour {
 	}
 	
 	
-	public static void ShotFired() {
-		S.shotsTaken++;
-	}
+	
 	
 }
